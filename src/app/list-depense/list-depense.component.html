@@ -1,0 +1,57 @@
+<app-navbar-responsable></app-navbar-responsable>
+<div class="container-fluid" style="width: 80%;margin-top: 25px">
+  <ng-container *ngIf="loggedIn; else notlogged">
+
+    <div class="row flex-nowrap">
+      <div class="col py-3">
+        <!--      <div class="d-flex justify-content-between">-->
+
+        <div class="d-flex flex-column bd-highlight " style="background-color: #f8f8f8">
+          <div class="d-flex justify-content-between">
+            <h2>Dépenses de la note</h2>
+          </div>
+
+          <div>
+            <table class="table">
+              <thead>
+              <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Date de depense</th>
+                <th scope="col">Description</th>
+                <th scope="col">Taxi</th>
+                <th scope="col">Hotel</th>
+                <th scope="col">Repas</th>
+                <th scope="col">Hebergement</th>
+
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let d of depense | async">
+                <th scope="row">{{d.id}}</th>
+                <td>{{d.dateFrais | date:'MMMM y' }}</td>
+                <td>{{d.description}}</td>
+                <td>{{d.taxi}}</td>
+                <td>{{d.Hotel}}</td>
+                <td>{{d.repas}}</td>
+                <td>{{d.hebergement}}</td>
+              </tr>
+
+
+              </tbody>
+            </table>
+          </div>
+
+
+
+        </div>
+
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-template #notlogged>
+    <div class="alert alert-dismissible alert-danger" style="margin-top: 15px" >
+      you are not logged in
+    </div>
+  </ng-template>
+</div>

@@ -1,0 +1,45 @@
+<app-navbar-responsable></app-navbar-responsable>
+<div>
+  <ng-container *ngIf="loggedIn; else notlogged">
+    <ng-container *ngIf="consultant | async as listNoteFrais; else failureOrLoading">
+      <table class="table table-light" style="width: 70%;margin: auto;margin-top: 45px">
+        <thead>
+        <tr>
+          <th scope="col">id</th>
+          <th scope="col">Nom</th>
+          <th scope="col">Prenom</th>
+          <th scope="col">email</th>
+          <th scope="col">Liste des depenes</th>
+        </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let c of consultant | async">
+            <td>{{c.id}}</td>
+            <td>{{c.nom}}</td>
+            <td>{{c.prenom}}</td>
+            <td>{{c.email}}</td>
+            <td><a routerLink="/responsable/consultant" [queryParams]="{id:c.id}"><button class="btn btn-primary">Details</button></a></td>
+          </tr>
+        </tbody>
+      </table>
+    </ng-container>
+  </ng-container>
+
+  <ng-template #failureOrLoading>
+    <ng-container *ngIf="errorMessage; else loading">
+      <div class="text-danger">
+        {{errorMessage}}
+      </div>
+    </ng-container>
+    <ng-template #loading>
+      Loading ....
+    </ng-template>
+  </ng-template>
+
+  <ng-template #notlogged>
+    <div class="alert alert-dismissible alert-danger" style="margin-top: 15px" >
+      you are not logged in
+    </div>
+  </ng-template>
+
+</div>

@@ -1,0 +1,71 @@
+<app-navbar-responsable></app-navbar-responsable>
+<div class="container-fluid" style="width: 90%; margin: auto;margin-top: 15px;">
+  <ng-container *ngIf="loggedIn; else notlogged">
+    <ng-container *ngIf="noteFrais | async as listNoteFrais; else failureOrLoading">
+
+
+      <div class="row flex-nowrap" style="background-color: #F8F8F8">
+
+        <div class="col py-3">
+          <div class="d-flex justify-content-between">
+            <div>
+              <h1>note de frais</h1>
+            </div>
+
+          </div>
+          <table class="table">
+            <thead>
+            <tr>
+              <th scope="col">Id</th>
+              <th scope="col">Date de note</th>
+              <th scope="col">status</th>
+              <th scope="col">Client</th>
+              <th scope="col">Projet</th>
+              <th scope="col">Type d'intervention</th>
+              <th scope="col">Remarque</th>
+              <th scope="col">Liste de depense</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let n of noteFrais | async">
+              <th scope="row"><a routerLink="/depense" [queryParams]="{id:n.id}">{{n.id}}</a></th>
+              <td>{{n.dateFrais | date:'MMMM y'}}</td>
+              <td>{{n.status}}</td>
+              <td>{{n.client}}</td>
+              <td>{{n.projet}}</td>
+
+              <td>{{n.typeIntervention}}</td>
+              <td>
+                <button class="btn btn-success" *ngIf="n.remarque == null" >ajouter une remarque </button>
+                <span *ngIf="n.remarque != null">{{n.remarque}}</span>
+              </td>
+              <td>
+                <a routerLink="/responsable/consultant/noteFrais" [queryParams]="{id:n.id}">
+                  <button class="btn btn-primary">Details</button>
+                </a>
+              </td>
+            </tr>
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </ng-container>
+  </ng-container>
+
+  <ng-template #failureOrLoading>
+    <ng-container *ngIf="errorMessage; else loading">
+      <div class="text-danger">
+        {{errorMessage}}
+      </div>
+    </ng-container>
+    <ng-template #loading>
+      Loading ....
+    </ng-template>
+  </ng-template>
+  <ng-template #notlogged>
+    <div class="alert alert-dismissible alert-danger" style="margin-top: 15px" >
+      you are not logged in
+    </div>
+  </ng-template>
+</div>
